@@ -6,13 +6,14 @@ const initialState = {
   id: null,
   role: null,
   balance: null,
+  org: "org1",
+  activeRole: null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_USER":
       const { name, login, id, role, balance } = action.payload;
-      console.log(name, login, id, role, balance);
       return {
         ...state,
         name,
@@ -20,7 +21,11 @@ function reducer(state, action) {
         id,
         role,
         balance,
+        activeRole: role,
       };
+    case "CHANGE_ACTIVE_ROLE":
+      const activeRole = state.role == state.activeRole ? "0" : state.role;
+      return { ...state };
     case "SET_LOGOUT":
       return initialState;
     default:

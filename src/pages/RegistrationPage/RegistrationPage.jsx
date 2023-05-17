@@ -22,13 +22,18 @@ function RegistrationPage() {
       await dispatch({ type: "SET_USER", payload: await user });
       navigate("/");
     } catch (e) {
+      alert("Error");
       console.log(e);
     }
   }
 
+  function handleHide() {
+    navigate("/");
+  }
+
   return (
-    <Modal show={true} centered>
-      <Modal.Header>
+    <Modal show={true} centered onHide={handleHide}>
+      <Modal.Header closeButton>
         <Modal.Title>Регистрация</Modal.Title>
       </Modal.Header>
       <Modal.Body>

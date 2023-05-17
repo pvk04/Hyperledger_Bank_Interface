@@ -13,6 +13,10 @@ function Profile() {
     console.log(state);
   }
 
+  function handleChangeRole() {
+    dispatch({ type: "CHANGE_ACTIVE_ROLE" });
+  }
+
   return (
     <Card bg="primary" border="light" text="white">
       <Card.Header>Профиль</Card.Header>
@@ -26,15 +30,15 @@ function Profile() {
         </Card.Text>
         <Card.Text>
           Роль:{" "}
-          {state.role == "0"
+          {state.activeRole == "0"
             ? "Пользователь"
-            : state.role == "1"
+            : state.activeRole == "1"
             ? "Продавец"
-            : state.role == "2"
+            : state.activeRole == "2"
             ? "Админ"
-            : state.role == "3"
+            : state.activeRole == "3"
             ? "Банк"
-            : state.role == "4"
+            : state.activeRole == "4"
             ? "Поставщик"
             : state.id
             ? "Магазин"
@@ -47,6 +51,15 @@ function Profile() {
         >
           Баланс: {state.balance}
         </Card.Text>
+        <Button
+          variant="light"
+          onClick={handleChangeRole}
+          style={
+            state.login || state.id ? { display: "flex" } : { display: "none" }
+          }
+        >
+          Переключить роль
+        </Button>
       </Card.Body>
       <Card.Footer>
         <Button

@@ -7,7 +7,7 @@ import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/*" element={<MainPage />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="registration" element={<RegistrationPage />} />
     </Routes>
