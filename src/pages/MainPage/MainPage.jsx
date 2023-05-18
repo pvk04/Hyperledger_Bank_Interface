@@ -15,7 +15,7 @@ function MainPage() {
         </Card.Header>
         <Card.Body>
           <Routes>
-            <Route path="/shops" element={<Shops />} />
+            <Route path="/shops/*" element={<Shops />} />
           </Routes>
         </Card.Body>
       </Card>
