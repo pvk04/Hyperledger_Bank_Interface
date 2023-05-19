@@ -4,7 +4,7 @@ export async function getShops() {
       method: "GET",
     };
     const response = await fetch(
-      "http://localhost:5000/shops/getShops",
+      "http://localhost:5001/shops/getShops",
       config
     );
 
@@ -27,7 +27,7 @@ export async function like(login, shopId, rateId, isLike) {
     };
 
     const response = await fetch(
-      "http://localhost:5000/shops/likeRate",
+      "http://localhost:5001/shops/likeRate",
       config
     );
 
@@ -49,7 +49,7 @@ export async function createReview(login, shopId, rate, text) {
       },
     };
 
-    const response = await fetch("http://localhost:5000/shops/setRate", config);
+    const response = await fetch("http://localhost:5001/shops/setRate", config);
     const result = await response.text();
     return JSON.parse(result);
   } catch (e) {

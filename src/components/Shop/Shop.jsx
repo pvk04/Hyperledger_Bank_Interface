@@ -11,7 +11,7 @@ function Shop({ setShops, shopId, city, rates, activeRole }) {
   const [show, setShow] = useState(false);
 
   return (
-    <>
+    <div style={{ marginBottom: "10px" }}>
       <Card>
         <Card.Header>Магазин №{shopId + 1}</Card.Header>
         <Card.Body>
@@ -28,9 +28,8 @@ function Shop({ setShops, shopId, city, rates, activeRole }) {
                   borderRadius: "5px",
                 }}
               >
-                <Card.Text>
-                  {author} - {rate} из 10
-                </Card.Text>
+                <Card.Text>Автор: {author}</Card.Text>
+                <Card.Text>Оценка: {rate} из 10</Card.Text>
                 <Card.Text>{text}</Card.Text>
                 <Likes
                   setShops={setShops}
@@ -38,7 +37,6 @@ function Shop({ setShops, shopId, city, rates, activeRole }) {
                   shopId={shopId}
                   rateId={rateId}
                 />
-                {/* передать входные параметры в лайк */}
               </div>
             ))}
           </div>
@@ -88,7 +86,7 @@ function Shop({ setShops, shopId, city, rates, activeRole }) {
           setShow(false);
         }}
       />
-    </>
+    </div>
   );
 }
 

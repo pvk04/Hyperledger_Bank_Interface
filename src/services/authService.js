@@ -8,7 +8,7 @@ export async function login(address, password, org) {
         "Content-Type": "application/json",
       },
     };
-    const response = await fetch("http://localhost:5000/auth/login", config);
+    const response = await fetch("http://localhost:5001/auth/login", config);
 
     const result = await response.text();
     return JSON.parse(result);
@@ -28,7 +28,7 @@ export async function registration(name, address, password) {
       },
     };
     const response = await fetch(
-      "http://localhost:5000/auth/registration",
+      "http://localhost:5001/auth/registration",
       config
     );
 
