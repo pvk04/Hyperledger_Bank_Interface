@@ -1,4 +1,4 @@
-export async function getShops(address, org) {
+export async function getShops() {
   try {
     const config = {
       method: "GET",
@@ -31,6 +31,25 @@ export async function like(login, shopId, rateId, isLike) {
       config
     );
 
+    const result = await response.text();
+    return JSON.parse(result);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function createReview(login, shopId, rate, text) {
+  try {
+    const config = {
+      method: "POST",
+      body: JSON.stringify({ login, shopId, rate, text }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    const response = await fetch("http://localhost:5000/shops/setRate", config);
     const result = await response.text();
     return JSON.parse(result);
   } catch (e) {

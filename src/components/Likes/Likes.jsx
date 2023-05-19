@@ -4,18 +4,23 @@ import Button from "react-bootstrap/Button";
 import { like } from "../../services/shopService";
 import { AppContext } from "../../context/context";
 
-function Likes({ likes, shopId, rateId }) {
+function Likes({ setShops, likes, shopId, rateId }) {
   const [{ login }] = useContext(AppContext);
   const [likesAmount, setLikesAmount] = useState(0);
   const [dislikesAmount, setDislikesAmount] = useState(0);
 
   useEffect(() => {
     function countAmount() {
-      const likesCount = 0;
-      const dislikesCount = 0;
+      let likesCount = 0;
+      let dislikesCount = 0;
       for (const user in likes) {
-        if (likes[user].isLike) likesCount++;
-        else dislikesCount++;
+        console.log("user: " + user);
+        // console.log(likes[user].isLike == "true");
+        if (likes[user].isLike == "true") {
+          likesCount++;
+        } else if (likes[user].isLike == "false") {
+          dislikesCount++;
+        }
       }
       setLikesAmount(likesCount);
       setDislikesAmount(dislikesCount);
@@ -23,9 +28,15 @@ function Likes({ likes, shopId, rateId }) {
     countAmount();
   }, []);
 
-  async function handleLike(shopId, rateId, isLike) {
-    const shops = await like(login, shopId, rateId, isLike);
-    console.log(shops);
+  async function handleLike(isLike) {
+    try {
+      setShops();
+      const shopsData = await like(login, shopId, rateId, isLike);
+      console.log("new likes: " + shopsData);
+      setShops(shopsData);
+    } catch (e) {
+      alert(e);
+    }
   }
 
   return (
@@ -35,7 +46,7 @@ function Likes({ likes, shopId, rateId }) {
         <Button
           variant="success"
           onClick={() => {
-            handleLike(shopId, rateId, true);
+            handleLike(true);
           }}
         >
           +
@@ -46,7 +57,7 @@ function Likes({ likes, shopId, rateId }) {
         <Button
           variant="danger"
           onClick={() => {
-            handleLike(shopId, rateId, false);
+            handleLike(false);
           }}
         >
           -
