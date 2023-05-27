@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const links = [
   { name: "Магазины", href: "/shops", access: "012null" },
-  { name: "Запросы", href: "/createRequest", access: "01" },
+  { name: "Запросы", href: "/createRequest", access: "012" },
 //   { name: "", href: "/requests", access: "2" },
 //   { name: "", href: "", access: "" },
 ];
