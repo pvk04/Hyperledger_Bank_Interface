@@ -10,12 +10,15 @@ import {
   getRequests,
   answerRequest,
 } from "../../services/requestService";
+import { getUsers } from "../../services/authService";
 
 function Requests() {
   const [{ login, role }] = useContext(AppContext);
   const [shops, setShops] = useState();
   const [selectedShop, setSelectedShop] = useState();
   const [requests, setRequests] = useState();
+  const [users, setUsers] = useState();
+  const [selectedUser, setSelectedUser] = useState();
 
   useEffect(() => {
     async function getData() {
@@ -26,7 +29,10 @@ function Requests() {
 
       const requestsData = await getRequests();
       setRequests(requestsData);
-      console.log(requestsData);
+
+      const usersData = await getUsers();
+      console.log(usersData);
+      setUsers(usersData);
     }
     getData();
   }, []);
@@ -54,9 +60,17 @@ function Requests() {
     }
   }
 
-  if (!shops || !requests) {
+  function handleSelectUser(e) {
+    setSelectedUser(e.target.value);
+  }
+
+  async function handleSubmitAdmin() {
+    
+  }
+
+  if (!shops || !requests || !users) {
     return <Loader />;
-  } else {
+  } else if (role != 2) {
     return (
       <>
         <Card style={{ display: role != 2 ? "block" : "none" }}>
@@ -93,7 +107,7 @@ function Requests() {
           </Card.Body>
         </Card>
         <div style={{ display: role == 2 ? "block" : "none" }}>
-          <Card.Text>Запросы: </Card.Text>
+          {/* <Card.Text>Запросы: </Card.Text>
           {requests.map(({ user, role, shop, status }, id) => {
             if (status == 0) {
               return (
@@ -130,8 +144,71 @@ function Requests() {
                 </Card>
               );
             }
-          })}
+          })} */}
         </div>
+      </>
+    );
+  } else if (role == 2) {
+    return (
+      <>
+        <Card>
+          <Card.Header>
+            <Card.Text>Сделать админом</Card.Text>
+          </Card.Header>
+          <Card.Body>
+            <Form onSubmit={handleSubmitAdmin}>
+              <Form.Text>Пользователь: </Form.Text>
+              <Form.Select onChange={handleSelectUser}>
+                {Object.keys(users).map(function (key) {
+                  const { id, role, name } = users[key];
+                  const userElement = (
+                    <option value={name} key={id}>
+                      {name}
+                    </option>
+                  );
+                  if (role == 0) return userElement;
+                })}
+              </Form.Select>
+              <Button type="submit">Сделать админом</Button>
+            </Form>
+          </Card.Body>
+        </Card>
+        <Card.Text>Запросы: </Card.Text>
+        {requests.map(({ user, role, shop, status }, id) => {
+          if (status == 0) {
+            return (
+              <Card>
+                <Card.Header>{user}</Card.Header>
+                <Card.Body>
+                  <Card.Text>Желаемая роль: {role}</Card.Text>
+                  <Card.Text style={{ display: role == 1 ? "block" : "none" }}>
+                    В магазине №{parseInt(shop) + 1}
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <Button
+                    variant="success"
+                    value={true}
+                    onClick={(e) => {
+                      handleAnswer(e, id);
+                    }}
+                  >
+                    Принять
+                  </Button>
+                  <Button
+                    variant="danger"
+                    value={false}
+                    onClick={(e) => {
+                      handleAnswer(e, id);
+                    }}
+                  >
+                    Отклонить
+                  </Button>
+                </Card.Footer>
+              </Card>
+            );
+          }
+        })}
       </>
     );
   }

@@ -38,3 +38,18 @@ export async function registration(name, address, password) {
     console.log(e);
   }
 }
+
+export async function getUsers() {
+  try {
+    const config = {
+      method: "GET",
+    };
+    const response = await fetch("http://localhost:5001/auth/getUsers", config);
+
+    const result = await response.text();
+    console.log(JSON.parse(result));
+    return JSON.parse(result);
+  } catch (e) {
+    console.log(e);
+  }
+}
